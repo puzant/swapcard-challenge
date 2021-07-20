@@ -125,7 +125,8 @@ const RemoveFavoriteButton = styled(Block)`
   color: #fff;
   background-color: #d33f1e;
   padding: 10px;
-  max-width: 150px;
+  width: 210px;
+  max-width: 100%;
   text-align: center;
   border-radius: 10px;
   &:hover {
