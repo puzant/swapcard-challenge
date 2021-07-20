@@ -8,6 +8,7 @@ import { useQuery } from '@apollo/client'
 import { GET_ARTIST } from '../queries/queries'
 
 import { Block } from '../comoponents/common/block'
+import { Loading } from '../comoponents/loading'
 import { Typography } from '@material-ui/core'
 import { Album } from '../comoponents/album'
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -18,7 +19,6 @@ export const ArtistDetails = () => {
 
   const {favoriteArtitsts, setFavoriteArtists, handleRemoveFromFavorites} = useContext(FavoriteArtistsContext)
 
-  const [isArtistFavorite, setIsArtistFavorite] = React.useState(null)
   const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false)
   
   const { artistId } = useParams<{ artistId: string }>();
@@ -80,15 +80,17 @@ export const ArtistDetails = () => {
       </Block>
 
       <Snackbar
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={openSnackbar}
-      autoHideDuration={5000}
-      onClose={() => setOpenSnackbar(false)}
-      message="Added to favorites"
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={() => setOpenSnackbar(false)}
+        message="Added to favorites"
     />
+
+    {loading && <Loading />}
 
     </Root>
   )

@@ -58,7 +58,7 @@ export const Home = () => {
           <Typography color='primary' variant='h5'>Enter an artist name to search</Typography>
         </EmptyState>
       }
-      
+
     </Root>
   )
 }
