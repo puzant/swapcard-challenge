@@ -1,25 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Layout } from './comoponents/common/layout'
+import Routes from './routes/routes'
+import FavoriteArtistsContext from './FavoriteArtistsContext'
 
 function App() {
+
+  const [favoriteArtitsts, setFavoriteArtists] = React.useState([])
+
+  const handleRemoveFromFavorites = (artistToBeRemoved: any) => {
+    setFavoriteArtists(
+      favoriteArtitsts.filter((artist: any) => artist.id !== artistToBeRemoved.id)
+      )
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <FavoriteArtistsContext.Provider value={{favoriteArtitsts, setFavoriteArtists, handleRemoveFromFavorites}}>
+      <Layout>
+        <Routes />
+      </Layout>
+    </FavoriteArtistsContext.Provider>
   );
 }
 
