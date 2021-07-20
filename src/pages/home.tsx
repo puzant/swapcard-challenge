@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { useQuery } from '@apollo/client';
 import { Link } from "react-router-dom";
+import { useDebounce } from '../hooks/useDebounce'
 
 import { SEARCH_ARTISTS } from '../queries/queries'
 
@@ -13,10 +14,13 @@ import { Loading } from '../comoponents/loading';
 import { Typography } from '@material-ui/core';
 
 export const Home = () => {
-  
+
+  const SEARCH_DEBOUNCE_TIMEOUT = 1000;
   const [artistName, setArtistName] = React.useState<string>("")
+  const debounceSearch = useDebounce(artistName, SEARCH_DEBOUNCE_TIMEOUT);
+
   const {loading, error, data} = useQuery(SEARCH_ARTISTS, {
-    variables: { artistName: artistName }
+    variables: { artistName: debounceSearch }
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

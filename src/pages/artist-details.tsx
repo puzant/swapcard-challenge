@@ -16,20 +16,16 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 export const ArtistDetails = () => {
 
-  const [isArtistFavorite, setIsArtistFavorite] = React.useState(null)
-  const [openSnackbar, setOpenSnackbar] = React.useState(false)
   const {favoriteArtitsts, setFavoriteArtists, handleRemoveFromFavorites} = useContext(FavoriteArtistsContext)
+
+  const [isArtistFavorite, setIsArtistFavorite] = React.useState(null)
+  const [openSnackbar, setOpenSnackbar] = React.useState<boolean>(false)
+  
   const { artistId } = useParams<{ artistId: string }>();
+  
   const {loading, error, data} = useQuery(GET_ARTIST, {
     variables: { artistId: artistId }
   });
-
-  React.useEffect(() => {
-    setIsArtistFavorite(
-      favoriteArtitsts.find((artist: any) => data?.lookup.artist.name === artist.name)
-    )
-  }, [isArtistFavorite, favoriteArtitsts])
-
 
   const handleAddToFavorites = () => {
     setFavoriteArtists((prevState: any) => [...prevState, data.lookup.artist])
@@ -48,28 +44,28 @@ export const ArtistDetails = () => {
         <ArtistType>{data?.lookup.artist.type}</ArtistType>
         <ArtistName>{data?.lookup.artist.name}</ArtistName>
 
-        {isArtistFavorite ? 
-          <RemoveFavoriteButton 
+        {
+          favoriteArtitsts.find((artist: any) => artist.name === data?.lookup.artist.name) ?
+            <RemoveFavoriteButton 
+              layout='horizontal' 
+              justify='center' 
+              align='center' 
+              gap={10}
+              onClick={onRemoveFromFavorites}
+            >
+              <span>Remove from favorites</span>
+            <DeleteIcon />
+          </RemoveFavoriteButton> :
+          <AddFavoriteButton 
             layout='horizontal' 
             justify='center' 
             align='center' 
             gap={10}
-            onClick={onRemoveFromFavorites}
+            onClick={handleAddToFavorites}
           >
-            <span>Remove from favorites</span>
-          <DeleteIcon />
-        </RemoveFavoriteButton> 
-          :
-        <AddFavoriteButton 
-          layout='horizontal' 
-          justify='center' 
-          align='center' 
-          gap={10}
-          onClick={handleAddToFavorites}
-        >
-          <span>Add to favorites</span>
-          <FavoriteIcon />
-        </AddFavoriteButton>
+            <span>Add to favorites</span>
+            <FavoriteIcon />
+          </AddFavoriteButton>
         }
 
       </ArtistInfoContainer>

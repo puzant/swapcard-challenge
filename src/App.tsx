@@ -9,12 +9,18 @@ function App() {
 
   const handleRemoveFromFavorites = (artistToBeRemoved: any) => {
     setFavoriteArtists(
-      favoriteArtitsts.filter((artist: any) => artist.id !== artistToBeRemoved.id)
+        favoriteArtitsts.filter((artist: any) => artist.id !== artistToBeRemoved.id)
       )
   }
 
   return (
-    <FavoriteArtistsContext.Provider value={{favoriteArtitsts, setFavoriteArtists, handleRemoveFromFavorites}}>
+    <FavoriteArtistsContext.Provider 
+      value={{
+        favoriteArtitsts, 
+        setFavoriteArtists, 
+        handleRemoveFromFavorites
+        }}
+      >
       <Layout>
         <Routes />
       </Layout>
